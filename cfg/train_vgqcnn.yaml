@@ -1,0 +1,149 @@
+# general optimization params
+train_batch_size: 64
+val_batch_size: &val_batch_size 64
+
+# logging params
+num_iterations: 150  # number of iterations to train for [million] 30~5eps with dexnet-size
+eval_iterations: 1  # number of iterations to eval and save model after [million]
+vis_frequency: 10000  # how often to visualize filters (in epochs)
+log_frequency: 100      # how often to log output (in steps)
+
+# train / val split params
+train_pct: 0.8889              # percentage of the data to use for training vs validation
+total_pct: 1.0              # percentage of all the files to use
+eval_total_train_error: 0   # whether or not to evaluate the total training error on each validataion
+
+# optimization params
+loss: sparse
+optimizer: momentum
+train_l2_regularizer: 0.0005
+base_lr: 0.001
+decay_step: 4.0 # number of iterations before stepping down in decay rate [million]. Overwrites decay_step_multiplier
+decay_rate: 0.95
+momentum_rate: 0.9
+max_training_examples_per_load: 128
+drop_rate: 0.0
+max_global_grad_norm: 100000000000
+
+# input params
+training_mode: classification
+image_field_name: depth_ims_tf_table
+pose_field_name: hand_poses
+
+# label params
+target_metric_name: robust_ferrari_canny  # name of the field to use for the labels
+metric_thresh: 0.002                 # threshold for positive examples (label = 1 if grasp_metric > metric_thresh)
+
+# preproc params
+num_random_files: 10000     # the number of random files to compute dataset statistics in preprocessing (lower speeds initialization)
+preproc_log_frequency: 100 # how often to log preprocessing (in steps)
+
+# denoising / synthetic data params
+multiplicative_denoising: 0
+gamma_shape: 1000.00
+
+symmetrize: 0
+
+gaussian_process_denoising: 0
+gaussian_process_rate: 0.5
+gaussian_process_scaling_factor: 4.0
+gaussian_process_sigma: 0.005
+
+# tensorboard
+tensorboard_port: 6006
+
+# debugging params
+debug: &debug 0
+debug_num_files: 10 # speeds up initialization
+seed: &seed 24098
+
+### GQCNN CONFIG ###
+gqcnn:
+  # basic data metrics
+  im_height: 32
+  im_width: 32
+  im_channels: 1
+  debug: *debug
+  seed: *seed
+
+  # needs to match input data mode that was used for training, determines the pose dimensions for the network
+  gripper_mode: legacy_parallel_jaw
+  pose_input:
+    x: 1
+    y: 1
+    z: 1
+    roll: 0
+    quaternion: 4
+    euler: 0
+
+  # prediction batch size, in training this will be overriden by the val_batch_size in the optimizer's config file
+  batch_size: *val_batch_size
+
+  # architecture
+  architecture:
+    im_stream:
+      conv1_1:
+        type: conv
+        filt_dim: 7
+        num_filt: 64
+        pool_size: 1
+        pool_stride: 1
+        pad: SAME
+        norm: 0
+        norm_type: local_response
+      conv1_2:
+        type: conv
+        filt_dim: 5
+        num_filt: 64
+        pool_size: 2
+        pool_stride: 2
+        pad: SAME
+        norm: 1
+        norm_type: local_response
+      conv2_1:
+        type: conv
+        filt_dim: 3
+        num_filt: 64
+        pool_size: 1
+        pool_stride: 1
+        pad: SAME
+        norm: 0
+        norm_type: local_response
+      conv2_2:
+        type: conv
+        filt_dim: 3
+        num_filt: 64
+        pool_size: 2
+        pool_stride: 2
+        pad: SAME
+        norm: 1
+        norm_type: local_response
+      fc3:
+        type: fc
+        out_size: 1024
+    pose_stream:
+      pc1:
+        type: pc
+        out_size: 16
+      pc2:
+        type: pc
+        out_size: 0
+    merge_stream:
+      fc4:
+        type: fc_merge
+        out_size: 1024
+      fc5:
+        type: fc
+        out_size: 1024
+      fc6:
+        type: fc
+        out_size: 2
+
+  # architecture normalization constants
+  radius: 2
+  alpha: 2.0e-05
+  beta: 0.75
+  bias: 1.0
+
+  # leaky relu coefficient
+  relu_coeff: 0.0

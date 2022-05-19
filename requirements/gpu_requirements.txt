@@ -1,0 +1,13 @@
+autolab-core
+autolab-perception==0.0.8
+visualization
+numpy
+opencv-python
+scipy
+matplotlib<=2.2.0
+tensorflow-gpu<=1.15.0
+scikit-learn
+scikit-image
+gputil
+psutil
+tqdm
