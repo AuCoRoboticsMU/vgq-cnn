@@ -10,15 +10,15 @@ accuracy of 74.2% compared to GQ-CNN's 76.6%. We also propose a modified network
 Fast-VGQ-CNN, that speeds up inference using a shared encoder architecture and can make 128 grasp quality 
 predictions in 12ms on a CPU.
 
-This work has been accepted for the IEEE World Congress on Computational Intelligence (WCCI) 2022.
+This work has been accepted for the International Joint Conference on Neural Networks (IJCNN) 2022.
 
-Our [code](https://figshare.com/s/b12b37b14b747b10524e) and our 
-[data](https://figshare.com/s/b12b37b14b747b10524e) can be accessed here.
+Our [code](https://github.com/AuCoRoboticsMU/vgq-cnn) and our 
+[data](https://doi.org/10.5281/zenodo.6606333) can be accessed here.
 
 If you use our code, please cite
 
 A. Konrad, J. McDonald and R. Villing, "VGQ-CNN: Moving beyond fixed cameras and top-grasps for grasp quality
-prediction," to appear in IEEE World Congress on Computational Intelligence (WCCI), 2022.
+prediction," to appear in International Joint Conference on Neural Networks (IJCNN), 2022.
 
 along with
 

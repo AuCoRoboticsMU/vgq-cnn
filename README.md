@@ -12,7 +12,7 @@ accuracy of 74.2% compared to GQ-CNN's 76.6%. We also propose a modified network
 Fast-VGQ-CNN, that speeds up inference using a shared encoder architecture and can make 128 grasp quality 
 predictions in 12ms on a CPU.
 
-This codebase and our data ([data.zip](DATALINK)) is made available for other researchers to use and build upon. We describe
+This codebase and our [data](https://doi.org/10.5281/zenodo.6606333) is made available for other researchers to use and build upon. We describe
 the use of the scripts and how to replicate our datasets and training processes below.
 
 
@@ -47,7 +47,7 @@ The analysis will be stored in `$RESULTS/$YOUR_MODEL_NAME_on_vg_dset_kappa_0_Tes
 
 If you want to change the dataset composition and the sampling strategies, described in chapter VI.B. in
 [our paper](https://arxiv.org/abs/2203.04874), you can modify and use our scripts in `tools/dataset_preparation/`.
-The complete, undersampled version of [VG-dset](ZIP FILE) is available as a zip file for download. Unpack it into `$DATA_DIR`
+The complete, undersampled version of VG-dset is available as a zip file for download on [zenodo](https://doi.org/10.5281/zenodo.6606333). Unpack it into `$DATA_DIR`
 and run/modify the following scripts for your usecase.
 
 - Use `undersample_psi.py` to remove grasps with a high psi angle from the dataset
@@ -73,7 +73,7 @@ available at [github](https://github.com/BerkeleyAutomation/gqcnn).
 If you use the code, datasets, or models in a publication, please cite:
 
 A. Konrad, J. McDonald and R. Villing, "VGQ-CNN: Moving beyond fixed cameras and top-grasps for grasp quality
-prediction," to appear in IEEE World Congress on Computational Intelligence (WCCI), 2022.
+prediction," to appear in International Joint Conference on Neural Networks (IJCNN), 2022.
 
 along with
 
